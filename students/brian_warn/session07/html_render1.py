@@ -1,4 +1,5 @@
 #!/Library/Frameworks/Python.framework/Versions/3.6/bin/python
+# html_render1.py
 
 
 class Element():
@@ -12,6 +13,7 @@ class Element():
             self.content = [content]
 
     def append(self, content):
+        ''' add another string to the content. '''
         self.content.append(content)
 
     def render(self, file_obj):
