@@ -3,7 +3,7 @@
 
 import os
 
-from html_render import Element, Body, Para, HTML
+from html_render import Element, Body, P, Html
 
 # test utilities
 
@@ -14,13 +14,15 @@ def render_element(element, filename='temp_render_file.html', remove=True):
 
     This can be used by multiple tests.
 
-    :param element: the element to be rendered (its render() method will be called)
+    :param element: the element to be rendered (its render() method
+     will be called)
 
-    :param filename='temp_render_file.html': the name of the temporary file to be used.
+    :param filename='temp_render_file.html': the name of the temporary
+     file to be used.
 
     :param remove=True: Whether to remove the file after using it to render.
-                        Set this to True if you want to be able to look at after
-                        the tests run.
+                        Set this to True if you want to be able to look
+                         at after the tests run.
 
     NOTE: - this could be refactored, and still used everywhere.
     """
@@ -78,7 +80,6 @@ def test_render():
     assert more_stuff in contents
 
 
-
 # you want to be careful with these:
 # It is testing an implementation detail, which is less than idea.
 #  sometimes in TDD, it's helpful to have quickies tests of
@@ -98,7 +99,6 @@ def test_render():
 # def test_html_tag():
 #     assert HTML.tag == 'html'
 
-
 def test_render_body():
     my_stuff = 'spam, spam, spam'
     el_object = Body(my_stuff)
@@ -113,7 +113,7 @@ def test_render_body():
 
 def test_render_para():
     my_stuff = 'spam, spam, spam'
-    el_object = Para(my_stuff)
+    el_object = P(my_stuff)
     more_stuff = 'eggs, eggs, eggs'
     el_object.append(more_stuff)
     contents = render_element(el_object)
@@ -125,7 +125,7 @@ def test_render_para():
 
 def test_render_html():
     my_stuff = 'spam, spam, spam'
-    el_object = HTML(my_stuff)
+    el_object = Html(my_stuff)
     more_stuff = 'eggs, eggs, eggs'
     el_object.append(more_stuff)
     contents = render_element(el_object)
@@ -137,7 +137,7 @@ def test_render_html():
 
 def test_render_non_strings():
     # this is crating a html page with a single body() element in it
-    el_object = HTML(Body('any string I like'))
+    el_object = Html(Body('any string I like'))
 
     contents = render_element(el_object)
     # make sure extra whitespace at beginning or end doesn't mess things up.
@@ -146,7 +146,8 @@ def test_render_non_strings():
     print(contents)  # so we can see what's going on if a test fails
 
     # so what should the results be?
-    # the html tag is the outer tag, so the contents should start and end with that.
+    # the html tag is the outer tag, so the contents should start
+    # and end with that.
     assert contents.startswith('<html>')
     assert contents.endswith('</html>')
 
@@ -162,4 +163,3 @@ def test_render_non_strings():
     assert contents.index('<body>') < contents.index('</body>')
     # the opening tag should come before the content
     assert contents.index('<body>') < contents.index('any string')
-
