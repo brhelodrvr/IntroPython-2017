@@ -1,16 +1,12 @@
-#!/Library/Frameworks/Python.framework/Versions/3.6/bin/python
-
-# import html_render1
-from html_render1 import Element, Body, Para, HTML
+import html_render
+from html_render import Element, Body, P, Html, Head, OneLineTag, Title
 
 def test_new_element():
-    ''' test that this can initialize '''
-    el_object = Element()
-    el_object2 = Element('content')
+    el_obj = Element
+    el_obj2 = Element('content')
 
 
 def test_add_content():
-    ''' testing internal structure to see what's going on. '''
     el_object = Element('content')
     el_object = Element()
     assert el_object.content == []
@@ -18,75 +14,93 @@ def test_add_content():
 
 def test_adding_empty_string():
     el_object = Element('')
-    assert el_object.content == ['']
+    assert el_object .content == ['']
 
 
 def test_append_string():
-    el_object = Element('spam')
-    el_object.append(', wonderful spam')
-    assert el_object.content == ['spam', ', wonderful spam']
+    el_object = Element('spam, spam, eggs')
+    el_object.append(' and spam')
+    assert el_object.content == ['spam, spam, eggs', ' and spam']
 
 
-def test_class_tag_exists():
+def test_tag_exists():
     assert Element.tag == 'html'
-    el_object = Element('spam, spam')
+    el_object = Element('spam, spam, spam')
     assert el_object.tag == 'html'
 
 
 def test_indent_exists():
-    assert Element.indent == '  '
+    # could alternately test that it is any number of spaces
+    assert ' ' in Element.indent
 
 
 def test_render():
-    my_stuff = 'spam'
+    my_stuff = 'spam, spam, spam'
+    more_stuff = '\neggs, eggs, eggs'
     el_object = Element(my_stuff)
-    more_stuff = 'eggs, eggs'
     el_object.append(more_stuff)
-
-    with open('file_test1', 'w') as out_file:
-        el_object.render(out_file)
-    with open('file_test1', 'r') as in_file:
+    with open('test1', 'w') as file_out:
+        el_object.render(file_out)
+    with open('test1', 'r') as in_file:
         contents = in_file.read()
-    assert contents.startswith('<html>')
+    assert contents.startswith('<!DOCTYPE html>\n<html>')
     assert contents.endswith('</html>')
     assert my_stuff in contents
     assert more_stuff in contents
 
-
 def test_body_tag():
-    assert Body.tag == 'body'
+    assert Body().tag == 'body'
 
-
-def test_p_tag():
-    assert Para.tag == 'p'
+def test_paragraph_tag():
+    assert P().tag == 'p'
 
 
 def test_html_tag():
-    assert HTML.tag == 'html'
-
+    assert Html().tag == 'html'
 
 def test_render_body():
-    my_stuff = 'spam'
+    my_stuff = 'spam, spam, spam'
+    more_stuff = '\neggs, eggs, eggs'
     el_object = Body(my_stuff)
-    more_stuff = 'eggs, eggs'
     el_object.append(more_stuff)
-
-    with open('file_test1', 'w') as out_file:
+    with open('test1', 'w') as out_file:
         el_object.render(out_file)
-    with open('file_test1', 'r') as in_file:
+    with open('test1', 'r') as in_file:
         contents = in_file.read()
-    assert contents.startswith('<body>')
+    assert contents.startswith('\n<body>')
     assert contents.endswith('</body>')
     assert my_stuff in contents
     assert more_stuff in contents
 
-
 def test_render_non_strings():
-
-    el_object = Element(Body('a string for testing'))
-    # need to solve this with recursion
-    with open('file_test1', 'w') as out_file:
-        el_object.render(out_file)  # <-- fails here
-    with open('file_test1', 'r') as in_file:
+    my_stuff = 'any string I like'
+    el_object = Element(Body(my_stuff))
+    with open('test3', 'w') as out_file:
+        el_object.render(out_file)
+    with open('test3', 'r') as in_file:
         contents = in_file.read()
+    assert my_stuff in contents
 
+def test_head_tag():
+    newobj = Head()
+    assert newobj.tag == 'head'
+
+
+def test_title_tag():
+    assert Title().tag == 'title'
+
+
+def test_title_render():
+    my_stuff= 'Title test render.'
+    more_stuff = ' Adding more stuff to the title test text.'
+    titleobj = Title(my_stuff)
+
+    titleobj.append(more_stuff)
+    with open('test2', 'w') as out_file:
+        titleobj.render(out_file)
+    with open('test2', 'r') as in_file:
+        contents = in_file.read()
+    assert contents.startswith('\n<title>')
+    assert contents.endswith('</title>')
+    assert my_stuff in contents
+    assert more_stuff in contents
