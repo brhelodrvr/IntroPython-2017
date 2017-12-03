@@ -132,4 +132,9 @@ def test_eq_circle():
         print("{} is not equal to {}".format(c1, c2))
 
 
-
+def test_sorted_circles():
+    circles = [Circle(6), Circle(7), Circle(8), Circle(4), Circle(0), Circle(2), Circle(3), Circle(5), Circle(9), Circle(1)]
+    circles.sort()
+    assert circles == [Circle(0), Circle(1), Circle(2), Circle(3), Circle(4), Circle(5), Circle(6), Circle(7), Circle(8), Circle(9)]
+    assert sorted(circles) == [Circle(0), Circle(1), Circle(2), Circle(3), Circle(4), Circle(5), Circle(6), Circle(7), Circle(8), Circle(9)]
+    
