@@ -90,13 +90,10 @@ def test_gt_circle():
     Step 8
     '''
 
-    c1 = Circle(10)
-    c2 = Circle(20)
+    c1 = Circle(20)
+    c2 = Circle(10)
 
-    try:
-        assert c1 > c2
-    except AssertionError:
-        print("Circle {} is not greater than Circle {}".format(c1, c2))
+    assert c1 > c2
 
 
 def test_lt_circle():
@@ -107,10 +104,7 @@ def test_lt_circle():
     c1 = Circle(10)
     c2 = Circle(20)
 
-    try:
-        assert c1 < c2
-    except AssertionError:
-        print("Circle {} is not less than Circle {}".format(c1, c2))
+    assert c1 < c2
 
 
 def test_eq_circle():
@@ -119,17 +113,13 @@ def test_eq_circle():
     '''
     c1 = Circle(10)
     c2 = Circle(20)
-    try:
-        assert c1 == c2
-    except AssertionError:
-        print("{} is not equal to {}".format(c1, c2))
+
+    assert c1 == c2
 
     c1 = Circle(10)
     c2 = Circle(10)
-    try:
-        assert c1 == c2
-    except AssertionError:
-        print("{} is not equal to {}".format(c1, c2))
+
+    assert c1 == c2
 
 
 def test_sorted_circles():
